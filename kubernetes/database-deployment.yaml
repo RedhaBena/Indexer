@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: neo4j:latest
+          env:
+            - name: NEO4J_AUTH
+              value: neo4j/aztec-peace-linear-laura-gregory-4537
+          ports:
+            - containerPort: 7474
+            - containerPort: 7687
+          resources:
+            limits:
+              memory: 3Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+    - protocol: TCP
+      port: 7474
+      targetPort: 7474
+      name: http
+    - protocol: TCP
+      port: 7687
+      targetPort: 7687
+      name: bolt

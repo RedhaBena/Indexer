@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indexer
+spec:
+  selector:
+    matchLabels:
+      app: indexer
+  template:
+    metadata:
+      labels:
+        app: indexer
+    spec:
+      containers:
+        - name: indexer
+          image: ghcr.io/redhabena/indexer
+          env:
+            - name: DATABASE_HOST
+              value: database:7687
+            - name: DATABASE_USER
+              value: neo4j
+            - name: DATABASE_PASS
+              value: aztec-peace-linear-laura-gregory-4537
+            - name: DOWNLOAD_FILE
+              value: https://originalstatic.aminer.cn/misc/dblp.v13.7z
+            - name: BATCH_SIZE
+              value: "2000"
+            - name: BLOCK_EXIT
+              value: "true"

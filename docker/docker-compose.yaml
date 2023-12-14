@@ -1,0 +1,34 @@
+version: '3'
+services:
+  database:
+    image: neo4j:latest
+    container_name: database
+    environment:
+      NEO4J_AUTH: neo4j/aztec-peace-linear-laura-gregory-4537
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 1s
+      timeout: 10s
+      retries: 20
+      start_period: 3s
+    mem_limit: 3g
+  indexer:
+    container_name: indexer
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ../biggertest.json:/file.json
+    environment:
+      - DATABASE_HOST=database:7687
+      - DATABASE_USER=neo4j
+      - DATABASE_PASS=aztec-peace-linear-laura-gregory-4537
+      - DOWNLOAD_FILE=https://originalstatic.aminer.cn/misc/dblp.v13.7z
+      - BATCH_SIZE=2000
+      - BLOCK_EXIT=true
