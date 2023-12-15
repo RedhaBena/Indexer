@@ -35,7 +35,7 @@ Chaque lot d'articles est ensuite traité dans une transaction qui effectue les 
 
 ## Résultat
 
-{"team"="BenammAdvDaBa23", "N"=XX, "RAM_MB"="3000", "seconds"="YY"}
+{"team"="BenammAdvDaBa23", "N"="12115473", "RAM_MB"="3000", "seconds"="21393"}
 
 ## Utilisation
 
